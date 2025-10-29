@@ -1,9 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>LEGO AI</title>
+    <style>
+        .custom-file-upload {
+            border: 1px solid #ccc;
+            display: inline-block;
+            padding: 6px 12px;
+            cursor: pointer;
+            background-color: #f2f2f2;
+            border-radius: 4px;
+        }
+
+        .file-name {
+            margin-left: 10px;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
     <h1>Welcome to LEGO AI!</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <!-- Кастомная кнопка для выбора файла -->
+        <label for="file-upload" class="custom-file-upload">
+            Upload Image
+        </label>
+        <input id="file-upload" type="file" name="file" accept="image/*" style="display:none;" onchange="updateFileName()">
+        <span class="file-name" id="file-name">No file chosen</span>
+        <br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Показ загруженного фото -->
+    {% if uploaded_file_url %}
+        <h2>Uploaded Image:</h2>
+        <img src="{{ uploaded_file_url }}" alt="Uploaded LEGO" style="max-width:300px;">
+    {% endif %}
+
+    <!-- JavaScript для обновления названия выбранного файла -->
+    <script>
+        function updateFileName() {
+            const input = document.getElementById('file-upload');
+            const fileName = document.getElementById('file-name');
+            if (input.files.length > 0) {
+                fileName.textContent = input.files[0].name;
+            } else {
+                fileName.textContent = 'No file chosen';
+            }
+        }
+    </script>
 </body>
 </html>
